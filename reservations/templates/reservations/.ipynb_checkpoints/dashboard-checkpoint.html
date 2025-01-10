@@ -1,0 +1,12 @@
+{% extends 'reservations/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1 style="color: #FF0350; text-align: center;">Dein Dashboard</h1>
+<p style="text-align: center;">Willkommen zurück, {{ user.username }}!</p>
+
+<div style="text-align: center;">
+    <a href="{% url 'configure' %}" style="color: white; background-color: #FF0350; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none;">Arbeitsplatz konfigurieren</a>
+</div>
+{% endblock %}

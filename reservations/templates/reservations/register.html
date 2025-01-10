@@ -1,0 +1,22 @@
+{% extends 'reservations/base.html' %}
+{% load static %}
+
+{% block title %}
+Register at StudyNest
+{% endblock %}
+
+{% block content %}
+<style>
+    /* Wiederverwende den Stil der Login-Seite */
+</style>
+
+<div class="form-container">
+    <h2>Register</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+</div>
+{% endblock %}

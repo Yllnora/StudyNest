@@ -1,0 +1,46 @@
+{% extends 'reservations/base.html' %}
+{% load static %}
+
+{% block title %}
+Your Dashboard
+{% endblock %}
+
+{% block content %}
+<style>
+    .dashboard-container {
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .dashboard-container h2 {
+        color: #FF0350;
+        margin-bottom: 1rem;
+    }
+
+    .dashboard-container p {
+        color: #555;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .dashboard-container a {
+        display: inline-block;
+        background-color: #FF0350;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .dashboard-container a:hover {
+        background-color: #D70042;
+    }
+</style>
+
+<div class="dashboard-container">
+    <h2>Welcome, {{ user.username }}!</h2>
+    <p>Manage your StudyNest reservations and configurations here.</p>
+    <a href="{% url 'configure' %}">Configure Your Study Pod</a>
+</div>
+{% endblock %}

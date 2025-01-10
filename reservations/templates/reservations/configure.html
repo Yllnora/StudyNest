@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configure Study Pod</title>
+    <link rel="stylesheet" href="{% static 'css/configure.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #FF0350;
+            text-align: center;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        input, select, button {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus {
+            border-color: #FF0350;
+            outline: none;
+        }
+
+        button {
+            background-color: #FF0350;
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #D70042;
+        }
+
+        .icon {
+            margin-right: 10px;
+            color: #FF0350;
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Configure Your Study Pod</h1>
+
+        <!-- Fehlermeldung bei Konflikt -->
+        {% if error %}
+        <p class="error-message">The selected time slot is not available. Please choose a different time.</p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="name"><span class="icon">👤</span>Name:</label>
+                <input type="text" id="name" name="name" placeholder="Your name" value="{{ name|default:'' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email"><span class="icon">📧</span>Email:</label>
+                <input type="email" id="email" name="email" placeholder="Your email" value="{{ email|default:'' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="start_date"><span class="icon">📅</span>Start Date:</label>
+                <input type="datetime-local" id="start_date" name="start_date" value="{{ start_date|default:'' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="end_date"><span class="icon">📅</span>End Date:</label>
+                <input type="datetime-local" id="end_date" name="end_date" value="{{ end_date|default:'' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="people"><span class="icon">👥</span>Number of People:</label>
+                <input type="number" id="people" name="number_of_people" min="1" max="4" value="{{ number_of_people|default:1 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="table_height"><span class="icon">📏</span>Table Height (cm):</label>
+                <input type="number" id="table_height" name="table_height" value="{{ table_height|default:75 }}" min="50" max="100">
+            </div>
+
+            <div class="form-group">
+                <label for="light"><span class="icon">💡</span>Light Intensity:</label>
+                <input type="range" id="light" name="light_intensity" min="0" max="100" value="{{ light_intensity|default:50 }}">
+            </div>
+
+            <button type="submit">Save Configuration</button>
+        </form>
+
+        <footer>&copy; 2024 StudyNest - All rights reserved</footer>
+    </div>
+</body>
+</html>
