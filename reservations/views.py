@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.dateparse import parse_datetime
+from django.contrib.admin.views.decorators import staff_member_required
 from .models import Reservation
 from .utils import is_reservation_available  # Importierte Funktion zur Verfügbarkeitsprüfung
 
@@ -23,7 +24,10 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('dashboard')
+            # Weiterleitung basierend auf Rolle
+            if user.is_staff:
+                return redirect('admin_reservations')  # Admin wird zur Admin-Seite weitergeleitet
+            return redirect('dashboard')  # Normale Benutzer zum Dashboard
     else:
         form = AuthenticationForm()
     return render(request, 'reservations/login.html', {'form': form})
@@ -47,9 +51,14 @@ def register(request):
 @login_required
 def dashboard(request):
     """
-    Benutzer-Dashboard: Zeigt alle Reservierungen des Benutzers.
+    Benutzer-Dashboard: Zeigt unterschiedliche Inhalte für Admins und normale Benutzer.
     """
-    reservations = Reservation.objects.filter(user=request.user)  # Nur eigene Reservierungen anzeigen
+    if request.user.is_staff:
+        # Admin wird direkt zur Admin-Seite weitergeleitet
+        return redirect('admin_reservations')
+
+    # Normale Benutzer sehen ihre eigenen Reservierungen
+    reservations = Reservation.objects.filter(user=request.user)
     return render(request, 'reservations/dashboard.html', {'reservations': reservations})
 
 
@@ -93,7 +102,7 @@ def configure(request):
                 'table_height': table_height,
                 'light_intensity': light_intensity,
             })
-    
+
     return render(request, 'reservations/configure.html')
 
 
@@ -110,3 +119,21 @@ def reservation_success(request):
     Erfolgsseite nach einer erfolgreichen Reservierung.
     """
     return render(request, 'reservations/reservation_success.html')
+
+
+@login_required
+def user_reservations(request):
+    """
+    Zeigt alle Reservierungen des eingeloggten Benutzers.
+    """
+    reservations = Reservation.objects.filter(user=request.user)
+    return render(request, 'reservations/user_reservations.html', {'reservations': reservations})
+
+
+@staff_member_required
+def admin_reservations(request):
+    """
+    Zeigt alle Reservierungen aller Benutzer an. Nur für Admins zugänglich.
+    """
+    reservations = Reservation.objects.all().order_by('start_date')
+    return render(request, 'reservations/admin_reservations.html', {'reservations': reservations})
