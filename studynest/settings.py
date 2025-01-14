@@ -23,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-80h9f@e0p7&$v667)gx)p#d)0=e5&z3f8ao3c2w4sia7mwac2d"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# Add your PythonAnywhere domain to allowed hosts
+ALLOWED_HOSTS = ['yllnora.pythonanywhere.com']
 
 
 # Application definition
@@ -121,6 +122,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "reservations/static"]
 
+# Directory where static files will be collected for deployment
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 # Logout redirection
 LOGOUT_REDIRECT_URL = 'home'  # Redirect to the home page after logout
 
@@ -137,4 +141,3 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 LOGIN_REDIRECT_URL = 'dashboard'  # Weiterleitung nach erfolgreichem Login
 LOGOUT_REDIRECT_URL = 'home'  # Weiterleitung nach erfolgreichem Logout
-
