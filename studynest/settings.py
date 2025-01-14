@@ -12,24 +12,16 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-80h9f@e0p7&$v667)gx)p#d)0=e5&z3f8ao3c2w4sia7mwac2d"
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-# Add your PythonAnywhere domain to allowed hosts
 ALLOWED_HOSTS = ['yllnora.pythonanywhere.com']
 
 
-# Application definition
 
 INSTALLED_APPS = [
     'rest_framework',
@@ -74,9 +66,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "studynest.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -84,9 +73,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -104,9 +90,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -116,28 +99,18 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "reservations/static"]
 
-# Directory where static files will be collected for deployment
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Logout redirection
-LOGOUT_REDIRECT_URL = 'home'  # Redirect to the home page after logout
+LOGOUT_REDIRECT_URL = 'home'  
 
-# Optional: Auto-expire sessions when the browser closes
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Session Management
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-LOGIN_REDIRECT_URL = 'dashboard'  # Weiterleitung nach erfolgreichem Login
-LOGOUT_REDIRECT_URL = 'home'  # Weiterleitung nach erfolgreichem Logout
+LOGIN_REDIRECT_URL = 'dashboard' 
+LOGOUT_REDIRECT_URL = 'home' 
