@@ -6,7 +6,7 @@ class Reservation(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     start_date = models.DateTimeField()
-    end_date = models.DateTimeField(null=True, blank=True)  # Feld mit null und blank zulassen
+    end_date = models.DateTimeField(null=True, blank=True) 
     number_of_people = models.IntegerField()
     table_height = models.IntegerField(default=75)
     light_intensity = models.IntegerField(default=50)
