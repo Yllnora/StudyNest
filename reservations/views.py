@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.dateparse import parse_datetime
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import Reservation
-from .utils import is_reservation_available  # Importierte Funktion zur Verfügbarkeitsprüfung
+from .utils import is_reservation_available 
 
 
 def home(request):
@@ -24,10 +24,10 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            # Weiterleitung basierend auf Rolle
+            
             if user.is_staff:
-                return redirect('admin_reservations')  # Admin wird zur Admin-Seite weitergeleitet
-            return redirect('dashboard')  # Normale Benutzer zum Dashboard
+                return redirect('admin_reservations')  
+            return redirect('dashboard')  
     else:
         form = AuthenticationForm()
     return render(request, 'reservations/login.html', {'form': form})
@@ -54,10 +54,9 @@ def dashboard(request):
     Benutzer-Dashboard: Zeigt unterschiedliche Inhalte für Admins und normale Benutzer.
     """
     if request.user.is_staff:
-        # Admin wird direkt zur Admin-Seite weitergeleitet
+      
         return redirect('admin_reservations')
 
-    # Normale Benutzer sehen ihre eigenen Reservierungen
     reservations = Reservation.objects.filter(user=request.user)
     return render(request, 'reservations/dashboard.html', {'reservations': reservations})
 
@@ -76,9 +75,8 @@ def configure(request):
         table_height = int(request.POST.get('table_height', 75))
         light_intensity = int(request.POST.get('light_intensity', 50))
 
-        # Verfügbarkeitsprüfung
         if is_reservation_available(start_date, end_date):
-            # Reservierung erstellen
+          
             Reservation.objects.create(
                 user=request.user,
                 name=name,
@@ -91,7 +89,7 @@ def configure(request):
             )
             return redirect('reservation_success')
         else:
-            # Fehler anzeigen, wenn Zeitraum nicht verfügbar ist
+
             return render(request, 'reservations/configure.html', {
                 'error': 'The selected time slot is not available. Please choose a different time.',
                 'name': name,
