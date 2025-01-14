@@ -30,7 +30,7 @@ Your Dashboard
         padding: 10px 20px;
         text-decoration: none;
         border-radius: 5px;
-        margin: 10px; /* Abstände zwischen Buttons */
+        margin: 10px; 
         transition: background-color 0.3s ease;
     }
 
@@ -43,11 +43,11 @@ Your Dashboard
     <h2>Welcome, {{ user.username }}!</h2>
 
     {% if user.is_staff %}
-        <!-- Admin-spezifische Inhalte -->
+      
         <p>You have admin privileges. Manage all reservations below.</p>
         <a href="{% url 'admin_reservations' %}">View All Reservations</a>
     {% else %}
-        <!-- Benutzer-spezifische Inhalte -->
+        
         <p>Manage your StudyNest reservations and configurations here.</p>
         <a href="{% url 'configure' %}">Configure Your Study Pod</a>
         <a href="{% url 'user_reservations' %}">View My Reservations</a>
